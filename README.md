@@ -322,3 +322,38 @@
     ReactDOMServer.renderToString(<Component />) //0.14+
     ReactDOMServer.renderToStaticMarkup(<Component />) //0.14+
     
+##JSX模式
+
+###Style简写
+
+查看[内联样式](https://facebook.github.io/react/tips/inline-styles.html)。
+
+    var style = {
+      backgroundImage: 'url(xxx.jpg)',
+      height: 10
+    };
+    
+    return <div style={style}></div>;
+    
+###InnerHTML
+
+查看[dangerouslySetInnerHTML](https://facebook.github.io/react/tips/dangerously-set-inner-html.html)。
+
+    function markdownify() {
+      return "<p> ... </p>";
+    }
+    
+    <div dangerouslySetInnerHTML={{__html: markdownify()}} />
+    
+###列表
+
+    var TodoList = React.createClass({
+      render: function () {
+        function item(itemText) {
+          return <li>{itemText}</li>;
+        }
+        
+        return <ul>{this.props.items.map(item)}</ul>;
+      }
+    });
+    
