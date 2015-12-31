@@ -150,3 +150,39 @@
       }
     });
     
+##DOM节点
+
+###参考
+
+允许访问DOM节点。 查看[参考](http://facebook.github.io/react/docs/more-about-refs.html)。
+
+    <input ref="myInput" />
+    
+    this.refs.myInput
+    ReactDOM.findDOMNode(this.refs.myInput).focus()
+    ReactDOM.findDOMNode(this.refs.myInput).value
+    
+###DOM事件
+
+增加类似onChange属性。查看[事件](https://facebook.github.io/react/docs/events.html)。
+
+    <input type="text"
+           value={this.state.value}
+           onChange={this.handleChange} />
+    
+    handleChange: function (event) {
+      this.setState({value: event.target.value});
+    }
+    
+###双向绑定
+
+使用[LinkedStateMixin](http://facebook.github.io/react/docs/two-way-binding-helpers.html)轻松实现双向绑定。
+
+    Email: <input type="email" valueLink={this.linkState('email')} />
+    
+    React.createClass({
+      mixins: [React.addons.LinkedStateMixin]
+    });
+    
+    this.state.email
+    
