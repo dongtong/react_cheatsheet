@@ -186,3 +186,81 @@
     
     this.state.email
     
+##属性校验
+
+###基础类型
+
+原始类型: .string, .number, .func, 和 .bool。查看[propTypes](http://facebook.github.io/react/docs/reusable-components.html#prop-validation)。
+
+    React.createClass({
+      propTypes: {
+        email:    React.PropTypes.string,
+        seats:    React.PropTypes.number,
+        settings: React.PropTypes.object,
+        callback: React.PropTypes.func,
+        isClosed: React.PropTypes.bool,
+        any:      React.PropTypes.any
+      }
+    });
+    
+###必填类型
+
+添加.isRequired。
+
+    propTypes: {
+      requiredFunc: React.PropTypes.func.isRequired,
+      requiredAny:  React.PropTypes.any.isRequired
+    }
+    
+###React元素
+
+使用.element, .node。
+
+    propTypes: {
+      element: React.PropTypes.element,   //react元素
+      node:    React.PropTypes.node       //num, string, element
+                                          // ...或者它们的数组
+    }
+    
+###枚举
+
+使用 .oneOf, .oneOfType。
+
+    propTypes: {
+      enum:   React.PropTypes.oneOf(['M', 'F']),  //枚举
+      union:  React.PropTypes.oneOfType([         //任何一个
+                React.PropTypes.string,
+                React.PropTypes.number
+              ])
+    }
+    
+###数组和对象
+
+使用 .array[Of], .object[Of], .instanceOf, .shape。
+
+    propTypes: {
+      array:     React.PropTypes.array,
+      arrayOf:   React.PropTypes.arrayOf(React.PropTypes.number),
+      object:    React.PropTypes.object,
+      objectOf:  React.PropTypes.objectOf(React.PropTypes.number),
+      
+      message: React.PropTypes.instanceOf(Message),
+      
+      object2: React.PropTypes.shape({
+        color: React.PropTypes.string,
+        size:  React.PropTypes.number
+      })
+    }
+    
+###自定义验证
+
+提供你自己的函数
+
+    propTypes: {
+      customProp: function (props, propName, componentName) {
+        if (!/matchname/.test(props[propName])) {
+          return new Error('Validation failed!');
+        }
+      }
+    }
+    
