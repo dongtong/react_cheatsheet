@@ -106,3 +106,47 @@
     
     displayName: "..."      JSX自动填充
     
+##生命周期
+
+###挂载
+
+在初始化渲染之前。在didMount上加一些DOM之类的东西(events, timer之类)。查看[参考](http://facebook.github.io/react/docs/component-specs.html#mounting-componentwillmount)。
+
+    componentWillMount()    在渲染之前(还没有DOM)
+    
+    componentDidMount()     在渲染之后
+    
+###更新
+
+当父类改变属性和调用.setState()时调用。这些不会在初始化渲染的时候调用。查看[参考](http://facebook.github.io/react/docs/component-specs.html#updating-componentwillreceiveprops)。
+
+    componentWillReceiveProps (newProps={})                  这里使用setState()
+    
+    shouldComponentUpdate (newProps={}, newState={})         如果返回false，不会调用render()
+    
+    componentWillUpdate (newProps={} newState={})            这里不能使用setState()
+    
+    componentDidUpdate(preProps={}, preState={})             这里在DOM上操作
+    
+###卸载
+
+这里清理DOM上的一些东西(可能在didMount上已经完成)。查看[参考](http://facebook.github.io/react/docs/component-specs.html#unmounting-componentwillunmount)。
+
+    componentWillUnmount()                                   在DOM移除之前调用
+    
+###示例: 加载数据
+
+查看[初始化Ajax数据](http://facebook.github.io/react/tips/initial-ajax.html)
+
+    React.createClass({
+      componentWillMount: function () {
+        $.get(this.props.url, function (data) {
+          this.setState(data);
+        }.bind(this));
+      }
+      
+      render: function () {
+        return <CommentList data={this.state.data} />
+      }
+    });
+    
