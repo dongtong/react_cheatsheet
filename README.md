@@ -357,3 +357,6 @@
       }
     });
     
+##可以查看
+
+[动画](http://facebook.github.io/react/docs/animation.html)
