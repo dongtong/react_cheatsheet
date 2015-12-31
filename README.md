@@ -309,3 +309,16 @@
       mixins: [SetIntervalMixin]
     });
 
+##顶级API
+
+    React.createClass({ ... })
+    
+    React.isValidElement(c)
+    
+    ReactDOM.findDOMNode(c)     // 0.14+
+    ReactDOM.render(<Component />, domnode, [callback])  //0.14+
+    ReactDOM.unmountComponentAtNode(domnode) //0.14+
+    
+    ReactDOMServer.renderToString(<Component />) //0.14+
+    ReactDOMServer.renderToStaticMarkup(<Component />) //0.14+
+    
