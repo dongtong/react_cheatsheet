@@ -30,3 +30,39 @@
       }
     });
     
+##状态和属性
+
+使用[props](https://facebook.github.io/react/docs/tutorial.html#using-props)(this.props)访问父类传递过来的参数。使用[state](https://facebook.github.io/react/docs/tutorial.html#reactive-state)(this.state)管理动态数据。
+
+    <MyComponent fullscreen={true} />
+    
+    //属性
+    this.props.fullscreen //=> true
+    
+    //状态
+    this.setState({username: 'rstacruz'});
+    this.replaceState({...});
+    this.state.username   //=> 'rstacruz'
+    
+    render: function() {
+      return (
+        <div className={this.props.fullscreen ? 'full' : ''}>
+          Welcome, {this.state.username}
+        </div>
+      );
+    }
+    
+###设置默认值
+
+提前渲染this.state.comments和this.props.name。
+
+    React.createClass({
+      getInitialState: function () {
+        return { comments: []};
+      }
+      
+      getDefaultProps: function () {
+        return { name: "Hello"};
+      }
+    });
+    
