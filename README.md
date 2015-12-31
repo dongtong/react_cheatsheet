@@ -264,3 +264,48 @@
       }
     }
     
+##其他特性
+
+###类集合
+
+使用classname操作DOM class。之前都知道使用React.addons.classSet。查看[Class set](http://facebook.github.io/react/docs/class-name-manipulation.html)。
+
+    var cx = require('classname');
+    
+    render: function () {
+      var classes = cx ({
+        'message': true,
+        'message-important': this.props.isImportant,
+        'message-read': this.props.isRead
+      });
+      
+      return <div className={classes}> Great Scott! </div>;
+    } 
+    
+###扩展属性
+
+查看[Transferring props](http://facebook.github.io/react/docs/transferring-props.html)。
+
+    <VideoPlayer src="video.mp4" />
+    
+    var VideoPlayer = React.createClass({
+      render: function () {
+        /* 将 src="..." 属性传递到它的子组件 */
+        return <VideoEmbed {...this.props} controls='false' />;
+      }
+    });
+    
+###Mixins
+
+在[addons](https://facebook.github.io/react/docs/addons.html)中查看内建mixins。
+
+    var SetIntervalMixin = {
+      componentWillMount: function () {
+        ...
+      }
+    }
+    
+    var TickTock = React.createClass({
+      mixins: [SetIntervalMixin]
+    });
+
