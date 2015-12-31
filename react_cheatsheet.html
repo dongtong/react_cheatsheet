@@ -1,0 +1,491 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+*{margin:0;padding:0;}
+body {
+	font:13.34px helvetica,arial,freesans,clean,sans-serif;
+	color:black;
+	line-height:1.4em;
+	background-color: #F8F8F8;
+	padding: 0.7em;
+}
+p {
+	margin:1em 0;
+	line-height:1.5em;
+}
+table {
+	font-size:inherit;
+	font:100%;
+	margin:1em;
+}
+table th{border-bottom:1px solid #bbb;padding:.2em 1em;}
+table td{border-bottom:1px solid #ddd;padding:.2em 1em;}
+input[type=text],input[type=password],input[type=image],textarea{font:99% helvetica,arial,freesans,sans-serif;}
+select,option{padding:0 .25em;}
+optgroup{margin-top:.5em;}
+pre,code{font:12px Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;}
+pre {
+	margin:1em 0;
+	font-size:12px;
+	background-color:#eee;
+	border:1px solid #ddd;
+	padding:5px;
+	line-height:1.5em;
+	color:#444;
+	overflow:auto;
+	-webkit-box-shadow:rgba(0,0,0,0.07) 0 1px 2px inset;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;border-radius:3px;
+}
+pre code {
+	padding:0;
+	font-size:12px;
+	background-color:#eee;
+	border:none;
+}
+code {
+	font-size:12px;
+	background-color:#f8f8ff;
+	color:#444;
+	padding:0 .2em;
+	border:1px solid #dedede;
+}
+img{border:0;max-width:100%;}
+abbr{border-bottom:none;}
+a{color:#4183c4;text-decoration:none;}
+a:hover{text-decoration:underline;}
+a code,a:link code,a:visited code{color:#4183c4;}
+h2,h3{margin:1em 0;}
+h1,h2,h3,h4,h5,h6{border:0;}
+h1{font-size:170%;border-top:4px solid #aaa;padding-top:.5em;margin-top:1.5em;}
+h1:first-child{margin-top:0;padding-top:.25em;border-top:none;}
+h2{font-size:150%;margin-top:1.5em;border-top:4px solid #e0e0e0;padding-top:.5em;}
+h3{margin-top:1em;}
+hr{border:1px solid #ddd;}
+ul{margin:1em 0 1em 2em;}
+ol{margin:1em 0 1em 2em;}
+ul li,ol li{margin-top:.5em;margin-bottom:.5em;}
+ul ul,ul ol,ol ol,ol ul{margin-top:0;margin-bottom:0;}
+blockquote{margin:1em 0;border-left:5px solid #ddd;padding-left:.6em;color:#555;}
+dt{font-weight:bold;margin-left:1em;}
+dd{margin-left:2em;margin-bottom:1em;}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+<title>React Cheatsheet</title>
+
+</head>
+<body>
+<h1>React Cheatsheet</h1>
+
+<h2>入门</h2>
+
+<p>使用<a href="http://jsfiddle.net/reactjs/69z2wepo/">React.js jsfiddle</a>开始Hack。(或者使用非官方的<a href="http://jsbin.com/yafixat/edit?js,output">jsbin</a>)</p>
+
+<pre><code>var Component = React.createClass({
+  render: function() {
+    return &lt;div&gt;Hello {this.props.name}&lt;/div&gt;;
+  }
+}); 
+
+ReactDOM.render(&lt;Component name="John" /&gt;, document.body);
+</code></pre>
+
+<h2>嵌套</h2>
+
+<p>使用嵌套组件分离关注点。查看<a href="http://facebook.github.io/react/docs/multiple-components.html">多组件</a></p>
+
+<pre><code>var UserAvatar = React.createClass({ ... });
+var UserProfile = React.createClass({ ... });
+
+var Info = React.createClass({
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;UserAvatar src={this.props.avatar} /&gt;
+        &lt;UserProfile username={this.props.username} /&gt;
+      &lt;/div&gt;
+    );
+  }
+});
+</code></pre>
+
+<h2>状态和属性</h2>
+
+<p>使用<a href="https://facebook.github.io/react/docs/tutorial.html#using-props">props</a>(this.props)访问父类传递过来的参数。使用<a href="https://facebook.github.io/react/docs/tutorial.html#reactive-state">state</a>(this.state)管理动态数据。</p>
+
+<pre><code>&lt;MyComponent fullscreen={true} /&gt;
+
+//属性
+this.props.fullscreen //=&gt; true
+
+//状态
+this.setState({username: 'rstacruz'});
+this.replaceState({ ... });
+this.state.username   //=&gt; 'rstacruz'
+
+render: function() {
+  return (
+    &lt;div className={this.props.fullscreen ? 'full' : ''}&gt;
+      Welcome, {this.state.username}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+<h3>设置默认值</h3>
+
+<p>提前渲染this.state.comments和this.props.name。</p>
+
+<pre><code>React.createClass({
+  getInitialState: function () {
+    return { comments: []};
+  }
+
+  getDefaultProps: function () {
+    return { name: "Hello"};
+  }
+});
+</code></pre>
+
+<h2>组件API</h2>
+
+<p>这些是组件实例可以访问的方法。查看<a href="http://facebook.github.io/react/docs/component-api.html">组件API</a>。</p>
+
+<pre><code>ReactDOM.findDOMNode(c) // 0.14+
+React.findDOMNode(c)    // 0.13
+c.getDOMNode()          // 0.12 以下
+
+c.forceUpdate()
+c.isMounted()
+
+c.state
+c.props
+
+c.setState({ ... })
+c.replaceState({ ... })
+
+c.setProps({ ... })     //废弃
+c.replaceProps({ ... }) //废弃
+
+c.refs
+</code></pre>
+
+<h3>组件规范</h3>
+
+<p>你可以重写方法和属性。查看<a href="http://facebook.github.io/react/docs/component-specs.html">组件规范</a></p>
+
+<pre><code>render()
+
+getInitialState()
+
+getDefaultProps()
+
+mixins: [ ... ]         混入... [更多](http://ricostacruz.com/cheatsheets/react.html#mixins)
+
+propTypes: { ... }      校验... [更多](http://ricostacruz.com/cheatsheets/react.html#property-validation)
+
+statics: { ... }        静态方法
+
+displayName: "..."      JSX自动填充
+</code></pre>
+
+<h2>生命周期</h2>
+
+<h3>挂载</h3>
+
+<p>在初始化渲染之前。在didMount上加一些DOM之类的东西(events, timer之类)。查看<a href="http://facebook.github.io/react/docs/component-specs.html#mounting-componentwillmount">参考</a>。</p>
+
+<pre><code>componentWillMount()    在渲染之前(还没有DOM)
+
+componentDidMount()     在渲染之后
+</code></pre>
+
+<h3>更新</h3>
+
+<p>当父类改变属性和调用.setState()时调用。这些不会在初始化渲染的时候调用。查看<a href="http://facebook.github.io/react/docs/component-specs.html#updating-componentwillreceiveprops">参考</a>。</p>
+
+<pre><code>componentWillReceiveProps (newProps={})                  这里使用setState()
+
+shouldComponentUpdate (newProps={}, newState={})         如果返回false，不会调用render()
+
+componentWillUpdate (newProps={} newState={})            这里不能使用setState()
+
+componentDidUpdate(preProps={}, preState={})             这里在DOM上操作
+</code></pre>
+
+<h3>卸载</h3>
+
+<p>这里清理DOM上的一些东西(可能在didMount上已经完成)。查看<a href="http://facebook.github.io/react/docs/component-specs.html#unmounting-componentwillunmount">参考</a>。</p>
+
+<pre><code>componentWillUnmount()                                   在DOM移除之前调用
+</code></pre>
+
+<h3>示例: 加载数据</h3>
+
+<p>查看<a href="http://facebook.github.io/react/tips/initial-ajax.html">初始化Ajax数据</a></p>
+
+<pre><code>React.createClass({
+  componentWillMount: function () {
+    $.get(this.props.url, function (data) {
+      this.setState(data);
+    }.bind(this));
+  }
+
+  render: function () {
+    return &lt;CommentList data={this.state.data} /&gt;
+  }
+});
+</code></pre>
+
+<h2>DOM节点</h2>
+
+<h3>参考</h3>
+
+<p>允许访问DOM节点。 查看<a href="http://facebook.github.io/react/docs/more-about-refs.html">参考</a>。</p>
+
+<pre><code>&lt;input ref="myInput" /&gt;
+
+this.refs.myInput
+ReactDOM.findDOMNode(this.refs.myInput).focus()
+ReactDOM.findDOMNode(this.refs.myInput).value
+</code></pre>
+
+<h3>DOM事件</h3>
+
+<p>增加类似onChange属性。查看<a href="https://facebook.github.io/react/docs/events.html">事件</a>。</p>
+
+<pre><code>&lt;input type="text"
+       value={this.state.value}
+       onChange={this.handleChange} /&gt;
+
+handleChange: function (event) {
+  this.setState({value: event.target.value});
+}
+</code></pre>
+
+<h3>双向绑定</h3>
+
+<p>使用<a href="http://facebook.github.io/react/docs/two-way-binding-helpers.html">LinkedStateMixin</a>轻松实现双向绑定。</p>
+
+<pre><code>Email: &lt;input type="email" valueLink={this.linkState('email')} /&gt;
+
+React.createClass({
+  mixins: [React.addons.LinkedStateMixin]
+});
+
+this.state.email
+</code></pre>
+
+<h2>属性校验</h2>
+
+<h3>基础类型</h3>
+
+<p>原始类型: .string, .number, .func, 和 .bool。查看<a href="http://facebook.github.io/react/docs/reusable-components.html#prop-validation">propTypes</a>。</p>
+
+<pre><code>React.createClass({
+  propTypes: {
+    email:    React.PropTypes.string,
+    seats:    React.PropTypes.number,
+    settings: React.PropTypes.object,
+    callback: React.PropTypes.func,
+    isClosed: React.PropTypes.bool,
+    any:      React.PropTypes.any
+  }
+});
+</code></pre>
+
+<h3>必填类型</h3>
+
+<p>添加.isRequired。</p>
+
+<pre><code>propTypes: {
+  requiredFunc: React.PropTypes.func.isRequired,
+  requiredAny:  React.PropTypes.any.isRequired
+}
+</code></pre>
+
+<h3>React元素</h3>
+
+<p>使用.element, .node。</p>
+
+<pre><code>propTypes: {
+  element: React.PropTypes.element,   //react元素
+  node:    React.PropTypes.node       //num, string, element
+                                      // ...或者它们的数组
+}
+</code></pre>
+
+<h3>枚举</h3>
+
+<p>使用 .oneOf, .oneOfType。</p>
+
+<pre><code>propTypes: {
+  enum:   React.PropTypes.oneOf(['M', 'F']),  //枚举
+  union:  React.PropTypes.oneOfType([         //任何一个
+            React.PropTypes.string,
+            React.PropTypes.number
+          ])
+}
+</code></pre>
+
+<h3>数组和对象</h3>
+
+<p>使用 .array[Of], .object[Of], .instanceOf, .shape。</p>
+
+<pre><code>propTypes: {
+  array:     React.PropTypes.array,
+  arrayOf:   React.PropTypes.arrayOf(React.PropTypes.number),
+  object:    React.PropTypes.object,
+  objectOf:  React.PropTypes.objectOf(React.PropTypes.number),
+
+  message: React.PropTypes.instanceOf(Message),
+
+  object2: React.PropTypes.shape({
+    color: React.PropTypes.string,
+    size:  React.PropTypes.number
+  })
+}
+</code></pre>
+
+<h3>自定义验证</h3>
+
+<p>提供你自己的函数</p>
+
+<pre><code>propTypes: {
+  customProp: function (props, propName, componentName) {
+    if (!/matchname/.test(props[propName])) {
+      return new Error('Validation failed!');
+    }
+  }
+}
+</code></pre>
+
+<h2>其他特性</h2>
+
+<h3>类集合</h3>
+
+<p>使用classname操作DOM class。之前都知道使用React.addons.classSet。查看<a href="http://facebook.github.io/react/docs/class-name-manipulation.html">Class set</a>。</p>
+
+<pre><code>var cx = require('classname');
+
+render: function () {
+  var classes = cx ({
+    'message': true,
+    'message-important': this.props.isImportant,
+    'message-read': this.props.isRead
+  });
+
+  return &lt;div className={classes}&gt; Great Scott! &lt;/div&gt;;
+} 
+</code></pre>
+
+<h3>扩展属性</h3>
+
+<p>查看<a href="http://facebook.github.io/react/docs/transferring-props.html">Transferring props</a>。</p>
+
+<pre><code>&lt;VideoPlayer src="video.mp4" /&gt;
+
+var VideoPlayer = React.createClass({
+  render: function () {
+    /* 将 src="..." 属性传递到它的子组件 */
+    return &lt;VideoEmbed {...this.props} controls='false' /&gt;;
+  }
+});
+</code></pre>
+
+<h3>Mixins</h3>
+
+<p>在<a href="https://facebook.github.io/react/docs/addons.html">addons</a>中查看内建mixins。</p>
+
+<pre><code>var SetIntervalMixin = {
+  componentWillMount: function () {
+    ...
+  }
+}
+
+var TickTock = React.createClass({
+  mixins: [SetIntervalMixin]
+});
+</code></pre>
+
+<h2>顶级API</h2>
+
+<pre><code>React.createClass({ ... })
+
+React.isValidElement(c)
+
+ReactDOM.findDOMNode(c)     // 0.14+
+ReactDOM.render(&lt;Component /&gt;, domnode, [callback])  //0.14+
+ReactDOM.unmountComponentAtNode(domnode) //0.14+
+
+ReactDOMServer.renderToString(&lt;Component /&gt;) //0.14+
+ReactDOMServer.renderToStaticMarkup(&lt;Component /&gt;) //0.14+
+</code></pre>
+
+<h2>JSX模式</h2>
+
+<h3>Style简写</h3>
+
+<p>查看<a href="https://facebook.github.io/react/tips/inline-styles.html">内联样式</a>。</p>
+
+<pre><code>var style = {
+  backgroundImage: 'url(xxx.jpg)',
+  height: 10
+};
+
+return &lt;div style={style}&gt;&lt;/div&gt;;
+</code></pre>
+
+<h3>InnerHTML</h3>
+
+<p>查看<a href="https://facebook.github.io/react/tips/dangerously-set-inner-html.html">dangerouslySetInnerHTML</a>。</p>
+
+<pre><code>function markdownify() {
+  return "&lt;p&gt; ... &lt;/p&gt;";
+}
+
+&lt;div dangerouslySetInnerHTML={{__html: markdownify()}} /&gt;
+</code></pre>
+
+<h3>列表</h3>
+
+<pre><code>var TodoList = React.createClass({
+  render: function () {
+    function item(itemText) {
+      return &lt;li&gt;{itemText}&lt;/li&gt;;
+    }
+
+    return &lt;ul&gt;{this.props.items.map(item)}&lt;/ul&gt;;
+  }
+});
+</code></pre>
+
+<h2>可以查看</h2>
+
+<p><a href="http://facebook.github.io/react/docs/animation.html">动画</a></p>
+</body>
+</html>
