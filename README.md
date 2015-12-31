@@ -12,3 +12,21 @@
     
     ReactDOM.render(<Component name="John" />, document.body);
     
+##嵌套
+
+使用嵌套组件分离关注点。查看[多组件](http://facebook.github.io/react/docs/multiple-components.html)
+
+    var UserAvatar = React.createClass({...});
+    var UserProfile = React.createClass({...});
+    
+    var Info = React.createClass({
+      render() {
+        return (
+          <div>
+            <UserAvatar src={this.props.avatar} />
+            <UserProfile username={this.props.username} />
+          </div>
+        );
+      }
+    });
+    
